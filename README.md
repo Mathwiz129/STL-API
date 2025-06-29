@@ -1,6 +1,6 @@
 # STL Weight Estimator API
 
-A lightweight REST API built with FastAPI that estimates the weight of 3D printed objects from STL files. The API calculates the total volume of the mesh and estimates the actual printing volume based on infill percentage, shell count, and other printing parameters.
+A production-ready REST API built with FastAPI that estimates the weight of 3D printed objects from STL files. The API calculates the total volume of the mesh and estimates the actual printing volume based on infill percentage, shell count, and other printing parameters.
 
 ## Features
 
@@ -10,6 +10,7 @@ A lightweight REST API built with FastAPI that estimates the weight of 3D printe
 - **Weight Calculation**: Multiply estimated volume by material density
 - **Comprehensive Error Handling**: Validate files and parameter ranges
 - **RESTful API**: Clean, documented endpoints with automatic OpenAPI docs
+- **Production Ready**: Deployed and accessible via HTTPS
 
 ## API Endpoints
 
@@ -50,6 +51,18 @@ Health check endpoint for monitoring.
 
 Interactive API documentation (Swagger UI).
 
+### GET /test
+
+Web interface for testing the API.
+
+## Live API
+
+**Production URL**: https://stl-api-66l8.onrender.com
+
+- **API Documentation**: https://stl-api-66l8.onrender.com/docs
+- **Test Interface**: https://stl-api-66l8.onrender.com/test
+- **Health Check**: https://stl-api-66l8.onrender.com/health
+
 ## Installation
 
 ### Local Development
@@ -73,7 +86,7 @@ pip install -r requirements.txt
 
 4. Run the application:
 ```bash
-python main.py
+python render_start.py
 ```
 
 The API will be available at `http://localhost:8000`
@@ -90,54 +103,12 @@ docker build -t stl-weight-estimator .
 docker run -p 8000:8000 stl-weight-estimator
 ```
 
-## Deployment
-
-### Render (Free Tier)
-
-1. Create a new account on [Render](https://render.com)
-2. Connect your GitHub repository
-3. Create a new Web Service
-4. Configure the service:
-   - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
-   - **Environment**: Python 3.9+
-
-### Railway (Free Tier)
-
-1. Create a new account on [Railway](https://railway.app)
-2. Connect your GitHub repository
-3. Deploy automatically - Railway will detect the Python app
-4. The service will be available at the provided URL
-
-### Replit
-
-1. Create a new Repl on [Replit](https://replit.com)
-2. Choose Python as the language
-3. Upload your files or connect to GitHub
-4. Install dependencies in the shell:
-   ```bash
-   pip install -r requirements.txt
-   ```
-5. Run the application:
-   ```bash
-   python main.py
-   ```
-
-### Heroku (Paid)
-
-1. Create a `Procfile`:
-```
-web: uvicorn main:app --host=0.0.0.0 --port=$PORT
-```
-
-2. Deploy using Heroku CLI or GitHub integration
-
 ## Usage Examples
 
 ### Using curl
 
 ```bash
-curl -X POST "http://localhost:8000/estimate-weight" \
+curl -X POST "https://stl-api-66l8.onrender.com/estimate-weight" \
   -H "Content-Type: multipart/form-data" \
   -F "file=@model.stl" \
   -F "infill_percentage=20" \
@@ -152,7 +123,7 @@ curl -X POST "http://localhost:8000/estimate-weight" \
 ```python
 import requests
 
-url = "http://localhost:8000/estimate-weight"
+url = "https://stl-api-66l8.onrender.com/estimate-weight"
 files = {"file": open("model.stl", "rb")}
 data = {
     "infill_percentage": 20,
@@ -178,7 +149,7 @@ formData.append('line_thickness', '0.4');
 formData.append('layer_height', '0.2');
 formData.append('shell_count', '3');
 
-fetch('/estimate-weight', {
+fetch('https://stl-api-66l8.onrender.com/estimate-weight', {
     method: 'POST',
     body: formData
 })
@@ -216,6 +187,7 @@ All errors return appropriate HTTP status codes and descriptive error messages.
 - **Volume Calculation**: Mesh volume calculation with unit conversion
 - **Printing Estimation**: Simplified model considering shells and infill
 - **File Handling**: Temporary file processing with automatic cleanup
+- **Deployment**: Render (free tier)
 
 ## Contributing
 
