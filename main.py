@@ -72,9 +72,12 @@ def calculate_stl_volume(stl_file_path: str) -> float:
         # Load the mesh using trimesh
         mesh = trimesh.load(stl_file_path)
         
-        # Check if mesh is valid
-        if not mesh.is_valid:
-            raise ValueError("Invalid mesh geometry")
+        # Check if mesh loaded successfully and has volume
+        if mesh is None:
+            raise ValueError("Failed to load STL file")
+        
+        if not hasattr(mesh, 'volume') or mesh.volume is None:
+            raise ValueError("Invalid mesh - no volume data")
         
         # Calculate volume in cubic millimeters and convert to cubic centimeters
         volume_mm3 = mesh.volume
