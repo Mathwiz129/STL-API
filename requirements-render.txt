@@ -1,0 +1,21 @@
+# Render-optimized requirements
+# Uses pre-compiled wheels where possible to avoid build issues
+
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+trimesh>=4.0.0
+numpy>=1.26.0
+pydantic>=2.5.0
+numpy-stl>=3.1.0
+requests>=2.31.0
+
+# Alternative approach - use specific versions known to work on Render
+# fastapi==0.104.1
+# uvicorn[standard]==0.24.0
+# python-multipart==0.0.6
+# trimesh==4.0.5
+# numpy==1.26.4
+# pydantic==2.5.0
+# numpy-stl==3.1.0
+# requests==2.31.0 

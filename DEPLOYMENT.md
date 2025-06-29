@@ -34,7 +34,7 @@ git push -u origin main
 
 Make sure you have these files in your repository:
 - ✅ `main.py` - Main FastAPI application
-- ✅ `requirements.txt` - Python dependencies
+- ✅ `requirements.txt` - Python dependencies (updated for Python 3.11+)
 - ✅ `render_start.py` - Production startup script
 - ✅ `test.html` - Web interface
 - ✅ `README.md` - Documentation
@@ -75,7 +75,7 @@ Click "Advanced" and add these environment variables if needed:
 | Variable | Value | Description |
 |----------|-------|-------------|
 | `ENVIRONMENT` | `production` | Sets production mode |
-| `PYTHON_VERSION` | `3.9.18` | Specifies Python version |
+| `PYTHON_VERSION` | `3.11.7` | Specifies Python version |
 
 ### 2.5 Deploy!
 
@@ -167,19 +167,24 @@ If you add a custom domain, update the test page URL detection.
 
 ### Common Issues:
 
-1. **Build Fails**
-   - Check `requirements.txt` for correct dependencies
-   - Verify Python version compatibility
+1. **Build Fails with "Cannot import 'setuptools.build_meta'"**
+   - **Solution**: The requirements.txt has been updated to use Python 3.11+ compatible versions
+   - **Alternative**: Use `requirements-render.txt` instead by changing the build command to `pip install -r requirements-render.txt`
 
-2. **API Not Responding**
+2. **Build Fails**
+   - Check `requirements.txt` for correct dependencies
+   - Verify Python version compatibility (use Python 3.11.7)
+   - Try using the build script: `chmod +x build.sh && ./build.sh`
+
+3. **API Not Responding**
    - Check Render logs for errors
    - Verify the start command is correct
 
-3. **CORS Errors**
+4. **CORS Errors**
    - The API includes CORS middleware for cross-origin requests
    - Check browser console for specific errors
 
-4. **File Upload Issues**
+5. **File Upload Issues**
    - Ensure STL files are valid
    - Check file size limits (Render has limits)
 
